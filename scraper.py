@@ -42,20 +42,14 @@ def scrape_review(url, href):
 
 def scrape_page(url, page):
     page = parse(url, '/reviews/albums/?page=', page)
-    if page.cssselect('div.four-oh-four'):
-        return False
     links = page.cssselect('a.album-link')
     for link in links:
         href = link.get('href')
         scrape_review(url, href)
 
-
-
 base_url = 'http://pitchfork.com'
 current_page = 1
 
-
 while True:
-    if not scrape_page(base_url, str(current_page)):
-        break
+    scrape_page(base_url, str(current_page))
     current_page += 1
