@@ -2,6 +2,7 @@
 import scraperwiki
 import lxml.html
 import time
+import random
 
 def parse(url, modifier, page=''):
     html = scraperwiki.scrape(url + modifier + page, user_agent='Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7')
@@ -47,12 +48,17 @@ def scrape_page(url, page):
     for link in links:
         href = link.get('href')
         scrape_review(url, href)
-        time.sleep(1)
+        time.sleep(random.random() * 2)
 
 base_url = 'http://pitchfork.com'
 current_page = 1
 
 while True:
-    scrape_page(base_url, str(current_page))
-    time.sleep(1)
+    try:
+        scrape_page(base_url, str(current_page))
+    except urllib2.HTTPError, e:
+        if e.code == 404:
+            break
+        scrape_page(base_url, str(current_page)) 
+    time.sleep(random.random() * 2)
     current_page += 1
