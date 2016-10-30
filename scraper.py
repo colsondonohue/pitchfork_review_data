@@ -1,6 +1,7 @@
 
 import scraperwiki
 import lxml.html
+import time
 
 def parse(url, modifier, page=''):
     html = scraperwiki.scrape(url + modifier + page, user_agent='Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7')
@@ -46,10 +47,12 @@ def scrape_page(url, page):
     for link in links:
         href = link.get('href')
         scrape_review(url, href)
+        time.sleep(1)
 
 base_url = 'http://pitchfork.com'
 current_page = 1
 
 while True:
     scrape_page(base_url, str(current_page))
+    time.sleep(1)
     current_page += 1
