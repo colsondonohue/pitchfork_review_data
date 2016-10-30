@@ -1,6 +1,7 @@
 
 import scraperwiki
 import lxml.html
+import urllib2
 import time
 import random
 
@@ -59,6 +60,6 @@ while True:
     except urllib2.HTTPError, e:
         if e.code == 404:
             break
-        scrape_page(base_url, str(current_page)) 
+        scrape_page(base_url, str(current_page))
     time.sleep(random.random() * 2)
     current_page += 1
