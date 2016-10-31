@@ -10,6 +10,7 @@ def parse(url, modifier, page=''):
     page = lxml.html.fromstring(html)
     return page
 
+
 def scrape_review(url, href):
     page = parse(url, href)
     url = url + href
@@ -51,15 +52,20 @@ def scrape_page(url, page):
         scrape_review(url, href)
         time.sleep(random.random() * 2)
 
+
+def run_scraper(url, page):
+    while True:
+        try:
+            scrape_page(url, str(page))
+        except urllib2.HTTPError, e:
+            if e.code == 404:
+                break
+            run_scraper(url, page)
+        time.sleep(random.random() * 2)
+        current_page += 1
+
+
 base_url = 'http://pitchfork.com'
 current_page = 1
 
-while True:
-    try:
-        scrape_page(base_url, str(current_page))
-    except urllib2.HTTPError, e:
-        if e.code == 404:
-            break
-        scrape_page(base_url, str(current_page))
-    time.sleep(random.random() * 2)
-    current_page += 1
+run_scraper(base_url, current_page)
