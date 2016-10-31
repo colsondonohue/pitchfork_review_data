@@ -57,6 +57,8 @@ def run_scraper(url, page):
             if e.code == 404:
                 break
             run_scraper(url, page)
+        except urllib2.URLError:
+            run_scraper(url, page)
         time.sleep(random.random() * 2)
         page += 1
 
