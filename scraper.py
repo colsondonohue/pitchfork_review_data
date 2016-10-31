@@ -62,7 +62,7 @@ def run_scraper(url, page):
                 break
             run_scraper(url, page)
         time.sleep(random.random() * 2)
-        current_page += 1
+        page += 1
 
 
 base_url = 'http://pitchfork.com'
