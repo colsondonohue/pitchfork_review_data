@@ -16,19 +16,15 @@ def scrape_review(url, href):
     url = url + href
     album = page.cssselect('h1.review-title')[0].text_content()
 
-    artists_el = page.cssselect('ul.artist-list.artist-links li a')
-    artists = ''
-    for artist in artists_el:
-        artists += artist.text_content() + ' '
+    artist_list = [artist.text_content() for artist in page.cssselect('ul.artist-list.artist-links li a')]
+    artists = ','.join(artist_list)
 
     score = page.cssselect('span.score')[0].text_content()
     date = page.cssselect('span.pub-date')[0].get('title')
     reviewer = page.cssselect('a.display-name')[0].text_content()
 
-    genres_el = page.cssselect('ul.genre-list li a')
-    genres = ''
-    for genre in genres_el:
-        genres += genre.text_content() + ' '
+    genre_list = [genre.text_content() for genre in page.cssselect('ul.genre-list li a')]
+    genres = ','.join(genre_list)
 
     unique_keys = ['url']
     data = {
