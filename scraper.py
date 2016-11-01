@@ -49,21 +49,17 @@ def scrape_page(url, page):
         time.sleep(random.random() * 2)
 
 
-def run_scraper(url, page):
-    while True:
-        try:
-            scrape_page(url, str(page))
-        except urllib2.HTTPError, e:
-            if e.code == 404:
-                break
-            run_scraper(url, page)
-        except urllib2.URLError:
-            run_scraper(url, page)
-        time.sleep(random.random() * 2)
-        page += 1
-
-
 base_url = 'http://pitchfork.com'
 current_page = 1
 
-run_scraper(base_url, current_page)
+while True:
+    try:
+        scrape_page(base_url, str(current_page))
+    except urllib2.HTTPError as e:
+        print e
+        if e.code == 404:
+            break
+    except urllib2.URLError as e:
+        print e
+    time.sleep(random.random() * 2)
+    current_page += 1
