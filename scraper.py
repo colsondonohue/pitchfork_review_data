@@ -46,7 +46,7 @@ def scrape_page(url, page):
     for link in links:
         href = link.get('href')
         scrape_review(url, href)
-        time.sleep(random.random() * 2)
+        time.sleep(random.random() * 1)
 
 
 base_url = 'http://pitchfork.com'
@@ -55,11 +55,11 @@ current_page = 1
 while True:
     try:
         scrape_page(base_url, str(current_page))
+        time.sleep(random.random() * 1)
+        current_page += 1
     except urllib2.HTTPError as e:
         print e
         if e.code == 404:
             break
     except urllib2.URLError as e:
         print e
-    time.sleep(random.random() * 2)
-    current_page += 1
