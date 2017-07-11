@@ -20,7 +20,7 @@ def scrape_review(url, href):
     artists = ','.join(artist_list)
 
     score = page.cssselect('span.score')[0].text_content()
-    date = page.cssselect('span.pub-date')[0].get('title')
+    date = page.cssselect('time.pub-date')[0].get('title')
     reviewer = page.cssselect('a.display-name')[0].text_content()
 
     genre_list = [genre.text_content() for genre in page.cssselect('ul.genre-list li a')]
